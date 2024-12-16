@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Hospitalaria</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gestión de Pacientes y Doctores</h1>
+
+    <h1>Insertar Paciente</h1>
+    <form action="/insertar-paciente" method="POST">
+        <input type="text" name="nombre" placeholder="Nombre" required><br>
+        <input type="number" name="edad" placeholder="Edad" required><br>
+        <input type="text" name="telefono" placeholder="Teléfono" required><br>
+        <button type="submit">Insertar Paciente</button>
+    </form>
+
+    <h1>Insertar Doctor</h1>
+    <form action="/insertar-doctor" method="POST">
+        <input type="text" name="nombre" placeholder="Nombre" required><br>
+        <input type="text" name="especialidad" placeholder="Especialidad" required><br>
+        <input type="number" name="costo_consulta" placeholder="Costo de Consulta" required><br>
+        <textarea name="horario_atencion" placeholder="Horario de Atención"></textarea><br>
+        <button type="submit">Insertar Doctor</button>
+    </form>
+
+    <h1>Modificar Paciente</h1>
+    <form action="/modificar-paciente" method="POST">
+        <input type="number" name="id" placeholder="ID del Paciente" required><br>
+        <input type="text" name="nombre" placeholder="Nuevo Nombre" required><br>
+        <input type="number" name="edad" placeholder="Nueva Edad" required><br>
+        <input type="text" name="telefono" placeholder="Nuevo Teléfono" required><br>
+        <button type="submit">Modificar Paciente</button>
+    </form>
+
+    <h1>Modificar Doctor</h1>
+    <form action="/modificar-doctor" method="POST">
+        <input type="number" name="id" placeholder="ID del Doctor" required><br>
+        <input type="text" name="nombre" placeholder="Nuevo Nombre" required><br>
+        <input type="text" name="especialidad" placeholder="Nueva Especialidad" required><br>
+        <input type="number" name="costo_consulta" placeholder="Nuevo Costo de Consulta" required><br>
+        <textarea name="horario_atencion" placeholder="Nuevo Horario de Atención"></textarea><br>
+        <button type="submit">Modificar Doctor</button>
+    </form>
+
+    <h1>Eliminar Paciente</h1>
+    <form action="/eliminar-paciente" method="POST">
+        <input type="number" name="id" placeholder="ID del Paciente" required><br>
+        <button type="submit">Eliminar Paciente</button>
+    </form>
+
+    <h1>Eliminar Doctor</h1>
+    <form action="/eliminar-doctor" method="POST">
+        <input type="number" name="id" placeholder="ID del Doctor" required><br>
+        <button type="submit">Eliminar Doctor</button>
+    </form>
+
+    <h1>Eliminar Usuario</h1>
+    <form action="/eliminar-usuario" method="POST">
+        <label for="id">ID del Usuario:</label>
+        <input type="number" id="id" name="id" placeholder="ID del usuario a eliminar" required>
+        <button type="submit">Eliminar Usuario</button>
+    </form>
+
+    <h1>Agregar Columna a la Tabla Pacientes</h1>
+    <form action="/agregar-columna-pacientes" method="POST">
+        <input type="text" name="columna" placeholder="Nombre de la columna" required><br>
+        <input type="text" name="tipo" placeholder="Tipo de dato (por ejemplo VARCHAR(100))" required><br>
+        <button type="submit">Agregar Columna</button>
+    </form>
+    
+    <h1>Agregar Columna a la Tabla Doctores</h1>
+    <form action="/agregar-columna-doctores" method="POST">
+        <input type="text" name="columna" placeholder="Nombre de la columna" required><br>
+        <input type="text" name="tipo" placeholder="Tipo de dato (por ejemplo VARCHAR(100))" required><br>
+        <button type="submit">Agregar Columna</button>
+    </form>
+    
+    <h1>Eliminar Columna de la Tabla Pacientes</h1>
+    <form action="/eliminar-columna-pacientes" method="POST">
+        <input type="text" name="columna" placeholder="Nombre de la columna a eliminar" required><br>
+        <button type="submit">Eliminar Columna</button>
+    </form>
+    
+    <h1>Eliminar Columna de la Tabla Doctores</h1>
+    <form action="/eliminar-columna-doctores" method="POST">
+        <input type="text" name="columna" placeholder="Nombre de la columna a eliminar" required><br>
+        <button type="submit">Eliminar Columna</button>
+    </form>
+
+    <button onclick="window.location.href='/'">Volver</button>
+</body>
+</html>

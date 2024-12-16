@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión hospital</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <h1>Bienvenido</h1>
+  <p>Esta pagina esta dedicada al informe y al registro de consultas medicas.</p>
+  <p>Hospital Angeles Tel.664-3067-364</p>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión del hospital</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Incluir barra de navegación desde navbar.html -->
+  <div id="navbar"></div>
+
+  <script>
+      // Insertar el contenido de navbar.html en el elemento con id "navbar"
+      fetch('/navbar.html')
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById('navbar').innerHTML = data;
+          })
+          .catch(error => console.error('Error cargando el navbar:', error));
+  </script>
+</body>
+
+<script>
+  // Solicitar el tipo de usuario y ajustar el menú en función de este
+  fetch('/tipo-usuario')
+      .then(response => response.json())
+      .then(data => {
+          const menu = document.getElementById('menu');
+          const tipoUsuario = data.tipo_usuario;
+
+          // Agregar opciones de menú según el tipo de usuario
+          if (tipoUsuario === 'Gerente') {
+              menu.innerHTML += '<li><a href="/ver-usuarios">Ver Usuarios</a></li>';
+              menu.innerHTML += '<li><a href="/InformacionRegistrada.html">Informacion</a></li>';
+              menu.innerHTML += '<li><a href="/ajusteInformacion.html">Ajustes</a></li>';
+          } else if (tipoUsuario === 'Doctor') {
+              menu.innerHTML += '<li><a href="/pacientes">Ver Pacientes</a></li>';
+              menu.innerHTML += '<li><a href="/citas">Ver Citas</a></li>';
+              menu.innerHTML += '<li><a href="/tratamientos">Ver Tratamientos</a></li>';
+              menu.innerHTML += '<li><a href="/busqueda.html">Busqueda en tiempo real</a></li>';
+              menu.innerHTML += '<li><a href="/InformacionRegistrada.html">Informacion</a></li>';
+          } else if (tipoUsuario === 'Paciente') {
+              menu.innerHTML += '<li><a href="/ver-mis-datos">Mis Datos</a></li>';
+              menu.innerHTML += '<li><a href="/buscar-citas">Buscar Citas</a></li>';
+              menu.innerHTML += '<li><a href="/buscar-tratamientos">Buscar Tratamientos</a></li>';
+          }
+
+          // Opción de cerrar sesión para todos los tipos de usuario
+          menu.innerHTML += '<li><a href="/logout">Cerrar Sesión</a></li>';
+
+          // Mostrar el formulario de registro de citas si el usuario es gerente
+          if (tipoUsuario === 'Gerente') {
+              document.getElementById('formulario-citas').style.display = 'block';
+          }
+
+          // Mostrar el formulario de registro de tratamientos si el usuario es doctor
+          if (tipoUsuario === 'Doctor') {
+              document.getElementById('formulario-tratamientos').style.display = 'block';
+          }
+
+      })
+      .catch(error => console.error('Error obteniendo el tipo de usuario:', error));
+</script>
+
+<body>
+
+  <!-- Formulario de registro de citas -->
+  <div id="formulario-citas" style="display: none;">
+    <h2>Registrar Cita</h2>
+    <form id="form-cita" action="/registrar-cita" method="POST">
+      <label for="paciente_id">Seleccionar Paciente:</label>
+      <select id="paciente_id" name="paciente_id" required>
+
+      </select>
+      <br>
+      <label for="doctor_id">Seleccionar Doctor:</label>
+      <select id="doctor_id" name="doctor_id" required>
+
+      </select>
+      <br>
+      <label for="fecha_cita">Fecha de la Cita:</label>
+      <input type="datetime-local" id="fecha_cita" name="fecha_cita" required>
+      <br>
+      <label for="motivo">Motivo de la Cita:</label>
+      <textarea id="motivo" name="motivo" required></textarea>
+      <br>
+      <button onclick="submitForm()">Confirmar</button>
+      <button type="button" onclick="cancelForm()">Cancelar</button>
+    </form>
+  </div>
+
+  <!-- Formulario de registro de tratamientos -->
+  <div id="formulario-tratamientos" style="display: none;">
+    <h2>Registrar Tratamiento</h2>
+    <form action="/registrar-tratamiento" method="POST">
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion" required></textarea>
+      <br>
+      <label for="costo">Costo:</label>
+      <input type="number" id="costo" name="costo" step="0.01" required>
+      <br>
+      <label for="fecha_inicio">Fecha de Inicio:</label>
+      <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+      <br>
+      <label for="fecha_fin">Fecha de Fin:</label>
+      <input type="date" id="fecha_fin" name="fecha_fin" required>
+      <br>
+      <label for="paciente_id_1">Seleccionar Paciente:</label>
+      <select id="paciente_id_1" name="paciente_id" required>
+
+      </select>
+      <br>
+      <button type="submit">Registrar Tratamiento</button>
+    </form>
+  </div>
+
+
+  <script>
+    // Obtener la lista de pacientes al cargar la página
+    fetch('/pacientes1')
+      .then(response => response.json())
+      .then(pacientes => {
+        // Llenar el select de pacientes para el formulario de citas
+        const selectPacientesCitas = document.getElementById('paciente_id');
+        pacientes.forEach(paciente => {
+          const option = document.createElement('option');
+          option.value = paciente.id; // paciente_id
+          option.textContent = `${paciente.nombre}`; // Nombre del paciente
+          selectPacientesCitas.appendChild(option);
+    });
+
+        // Llenar el select de pacientes para el formulario de tratamientos
+        const selectPacientesTratamientos = document.getElementById('paciente_id_1');
+        pacientes.forEach(paciente => {
+          const option = document.createElement('option');
+          option.value = paciente.id; // paciente_id
+          option.textContent = `${paciente.nombre}`; // Nombre del paciente
+          selectPacientesTratamientos.appendChild(option);
+    });
+  })
+  .catch(error => console.error('Error al cargar pacientes:', error));
+
+    // Obtener la lista de doctores al cargar la página
+    fetch('/doctores')
+      .then(response => response.json())
+      .then(doctores => {
+        const selectDoctores = document.getElementById('doctor_id');
+        doctores.forEach(doctor => {
+          const option = document.createElement('option');
+          option.value = doctor.id; // doctor_id
+          option.textContent = doctor.nombre; // Nombre del doctor
+          selectDoctores.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Error al cargar doctores:', error));
+  </script>
+
+  <!-- Código JavaScript directamente en el HTML -->
+  <script> 
+
+    function checkForm() {
+    var form = document.getElementById('formulario-citas');
+
+    if (form.checkValidity()) {
+      showConfirmation(); 
+    } else {
+      alert('Por favor, complete todos los campos antes de registrar la cita.');
+    }
+  }
+
+  // Mostrar el modal de confirmación
+  function showConfirmation() {
+    document.getElementById('confirmation-modal').style.display = 'block';
+  }
+
+  // Cerrar el modal de confirmación sin realizar la acción
+  function closeConfirmation() {
+    document.getElementById('confirmation-modal').style.display = 'none';
+  }
+
+  // Función para enviar el formulario
+  function submitForm() {
+    document.getElementById('form-cita').submit();
+  }
+
+  // Función para cancelar y limpiar el formulario
+  function cancelForm() {
+    if (confirm("¿Estás seguro de que deseas cancelar el registro?")) {
+      document.getElementById('form-cita').reset(); // Limpia el formulario
+    }
+  }
+  </script>
+
+</body>
+
+</html>
+
+

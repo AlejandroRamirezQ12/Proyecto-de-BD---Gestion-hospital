@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informacion registrada</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="navbar"></div>
+  <h1>Cargar informacion nueva desde Excel</h1>
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="excelFile" accept=".xlsx" />
+    <button type="submit">Subir Archivo</button>
+  </form>
+
+  <h1>Cargar informacion nueva desde PDF</h1>
+  <form action="/upload-pdf" method="POST" enctype="multipart/form-data">
+    <label for="pdfFile">Subir archivo PDF:</label>
+    <input type="file" name="pdfFile" accept=".pdf" />
+    <button type="submit">Subir PDF</button>
+  </form>
+
+
+  <script src="navbar.html"></script>
+  <button onclick="window.location.href='/download'">Descargar Pacientes en Excel</button>
+  <button onclick="window.location.href='/download-pdf'">Descargar Pacientes en PDF</button>
+  <button onclick="window.location.href='/'">Volver</button>
+</body>
+</html>

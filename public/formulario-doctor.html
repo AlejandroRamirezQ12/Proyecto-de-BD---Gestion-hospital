@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Doctor</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h2>Registrar Doctor</h2>
+  <form action="/registrar-doctor" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <label for="especialidad">Especialidad:</label>
+    <input type="text" id="especialidad" name="especialidad" required>
+    <label for="horario_atencion">Horario:</label>
+    <input type="text" id="horario_atencion" name="horario_atencion" required>
+    <label for="costo_consulta">Costo:</label>
+    <input type="number" id="costo_consulta" name="costo_consulta" required>
+    <button type="submit">Guardar</button>
+</form>
+</body>
+</html>
